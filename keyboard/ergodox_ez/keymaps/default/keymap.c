@@ -1,10 +1,15 @@
 #include "ergodox_ez.h"
 #include "debug.h"
 #include "action_layer.h"
+#include "keymap_dvorak.h"
 
-#define BASE 0 // default layer
-#define SYMB 1 // symbols
-#define MDIA 2 // media keys
+#define BASE 0 // qwerty layer
+#define SYMB 1 // qwerty symbols
+
+#define DV_BASE 2 // dvorak layer
+#define DV_SYMB 3 // dvorak symbols
+
+#define MDIA 4 // media keys
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Basic layer
@@ -28,28 +33,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 |      |ace   | End  |       | PgDn |        |      |
  *                                 `--------------------'       `----------------------'
  */
-// If it accepts an argument (i.e, is a function), it doesn't need KC_.
-// Otherwise, it needs KC_*
+ 
 [BASE] = KEYMAP(  // layer 0 : default
         // left hand
-        KC_EQL,         KC_1,         KC_2,   KC_3,   KC_4,   KC_5,   KC_LEFT,
-        KC_DELT,        KC_Q,         KC_W,   KC_E,   KC_R,   KC_T,   TG(SYMB),
-        KC_BSPC,        KC_A,         KC_S,   KC_D,   KC_F,   KC_G,
-        KC_LSFT,        CTL_T(KC_Z),  KC_X,   KC_C,   KC_V,   KC_B,   ALL_T(KC_NO),
-        LT(SYMB,KC_GRV),KC_QUOT,      LALT(KC_LSFT),  KC_LEFT,KC_RGHT,
-                                              ALT_T(KC_APP),  KC_LGUI,
-                                                              KC_HOME,
-                                               KC_SPC,KC_BSPC,KC_END,
+        DV_GRV,         DV_1,     DV_2,     DV_3,   DV_4,   DV_5,   0,
+        KC_TAB,         DV_QUOT,  DV_COMM,  DV_DOT, DV_P,   DV_Y,   KC_TAB,
+        KC_LCTL,        DV_A,     DV_O,     DV_E,   DV_U,   DV_I,
+        KC_LSFT,        DV_SCLN,  DV_Q,     DV_J,   DV_K,   DV_X,   0,
+        0,              0,        0,        0,      KC_LALT,
+                                                                0,  0,
+                                                                    0,
+                                               KC_SPC,KC_LCTL,KC_LALT,
         // right hand
-             KC_RGHT,     KC_6,   KC_7,   KC_8,   KC_9,   KC_0,             KC_MINS,
-             TG(SYMB),    KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,             KC_BSLS,
-                          KC_H,   KC_J,   KC_K,   KC_L,   LT(MDIA, KC_SCLN),GUI_T(KC_QUOT),
-             MEH_T(KC_NO),KC_N,   KC_M,   KC_COMM,KC_DOT, CTL_T(KC_SLSH),   KC_RSFT,
-                                  KC_UP,  KC_DOWN,KC_LBRC,KC_RBRC,          KC_FN1,
-             KC_LALT,        CTL_T(KC_ESC),
-             KC_PGUP,
-             KC_PGDN,KC_TAB, KC_ENT
+             KC_ESC,    DV_6,   DV_7,   DV_8,   DV_9,   DV_0,    DV_SLSH,
+             KC_BSPC,   DV_F,   DV_G,   DV_C,   DV_R,   DV_L,    DV_EQL,
+                        DV_D,   DV_H,   DV_T,   DV_N,   DV_S,    DV_MINS,
+             KC_ENT,    DV_B,   DV_M,   DV_W,   DV_V,   DV_Z,    KC_RSFT,
+                                  KC_RGUI,KC_ZKHK,KC_KANA,KC_RO,0,
+             0,        0,
+             0,
+             0,KC_TAB, KC_ENT
     ),
+    
 /* Keymap 1: Symbol Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
