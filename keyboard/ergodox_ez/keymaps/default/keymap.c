@@ -3,99 +3,103 @@
 #include "action_layer.h"
 #include "keymap_dvorak.h"
 
-#define BASE 0 // qwerty layer
-#define SYMB 1 // qwerty symbols
 
-#define DV_BASE 2 // dvorak layer
-#define DV_SYMB 3 // dvorak symbols
+#define BASE 0      // qwerty layer
+#define LY1 1       // qwerty symbols
 
-#define MDIA 4 // media keys
+#define LY2_NA 2    // dvorak layer
+#define LY3_NA 3    // dvorak symbols
+
+#define LY4_NA 4
+#define LY5_NA 5
+#define LY6_NA 6
+#define LY7_NA 7
+#define LY8_NA 8
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Keymap 0: Basic layer
- *
+/* BASE: QWERTY
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |   =    |   1  |   2  |   3  |   4  |   5  | LEFT |           | RIGHT|   6  |   7  |   8  |   9  |   0  |   -    |
+ * |   `    |   1  |   2  |   3  |   4  |   5  | ESC  |           | MUTE |   6  |   7  |   8  |   9  |   0  |   ]    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Del    |   Q  |   W  |   E  |   R  |   T  |  L1  |           |  L1  |   Y  |   U  |   I  |   O  |   P  |   \    |
+ * | Tab    |   Q  |   W  |   E  |   R  |   T  | Tab  |           | BkSp |   Y  |   U  |   I  |   O  |   P  |   [    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | BkSp   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |; / L2|' / Cmd |
- * |--------+------+------+------+------+------| Hyper|           | Meh  |------+------+------+------+------+--------|
- * | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |//Ctrl| RShift |
+ * | LCtrl  |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   ;  |   '    |
+ * |--------+------+------+------+------+------|      |           | Enter|------+------+------+------+------+--------|
+ * | LShift |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   /  | RShift |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |Grv/L1|  '"  |AltShf| Left | Right|                                       |  Up  | Down |   [  |   ]  | ~L1  |
+ *   |      |      |      |      | ESC@S|                                       | RGui |      |   -  |   =  |   \  |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        | App  | LGui |       | Alt  |Ctrl/Esc|
+ *                                        | Mute | PScrn|       |      |      |
  *                                 ,------|------|------|       |------+--------+------.
- *                                 |      |      | Home |       | PgUp |        |      |
- *                                 | Space|Backsp|------|       |------|  Tab   |Enter |
- *                                 |      |ace   | End  |       | PgDn |        |      |
+ *                                 |      |      |      |       | [L1] |        |      |
+ *                                 | Space| LCtrl|------|       |------|  Tab   |Enter |
+ *                                 |      |      | LAlt |       | [L0] |        |      |
  *                                 `--------------------'       `----------------------'
  */
  
 [BASE] = KEYMAP(  // layer 0 : default
         // left hand
-        DV_GRV,         DV_1,     DV_2,     DV_3,   DV_4,   DV_5,   0,
-        KC_TAB,         DV_QUOT,  DV_COMM,  DV_DOT, DV_P,   DV_Y,   KC_TAB,
-        KC_LCTL,        DV_A,     DV_O,     DV_E,   DV_U,   DV_I,
-        KC_LSFT,        DV_SCLN,  DV_Q,     DV_J,   DV_K,   DV_X,   0,
-        0,              0,        0,        0,      KC_LALT,
-                                                                0,  0,
+        _dv_GRV,         _dv_1,     _dv_2,     _dv_3,   _dv_4,   _dv_5,   KC_ESC,
+        KC_TAB,         _dv_QUOT,  _dv_COMM,  _dv_DOT, _dv_P,   _dv_Y,   KC_TAB,
+        KC_LCTL,        _dv_A,     _dv_O,     _dv_E,   _dv_U,   _dv_I,
+        KC_LSFT,        _dv_SCLN,  _dv_Q,     _dv_J,   _dv_K,   _dv_X,   0,
+        0,              0,        0,        0,      LT(LY1, KC_ESC),
+                                                    KC_MUTE,  KC_PSCR,
                                                                     0,
-                                               KC_SPC,KC_LCTL,KC_LALT,
+                                             KC_SPC, KC_LCTL, KC_LALT,
         // right hand
-             KC_ESC,    DV_6,   DV_7,   DV_8,   DV_9,   DV_0,    DV_SLSH,
-             KC_BSPC,   DV_F,   DV_G,   DV_C,   DV_R,   DV_L,    DV_EQL,
-                        DV_D,   DV_H,   DV_T,   DV_N,   DV_S,    DV_MINS,
-             KC_ENT,    DV_B,   DV_M,   DV_W,   DV_V,   DV_Z,    KC_RSFT,
-                                  KC_RGUI,KC_ZKHK,KC_KANA,KC_RO,0,
-             0,        0,
-             0,
-             0,KC_TAB, KC_ENT
+             KC_MUTE,   _dv_6,   _dv_7,   _dv_8,   _dv_9,   _dv_0,    _dv_EQL,
+             KC_BSPC,   _dv_F,   _dv_G,   _dv_C,   _dv_R,   _dv_L,    _dv_SLSH,
+                        _dv_D,   _dv_H,   _dv_T,   _dv_N,   _dv_S,    _dv_MINS,
+             KC_ENT,    _dv_B,   _dv_M,   _dv_W,   _dv_V,   _dv_Z,    KC_RSFT,
+                                         KC_RGUI, 0, _dv_LBRC, _dv_RBRC, 0,
+             HID_KEYBOARD_SC_LANG1,   0x04,
+             TG(LY1),
+             TG(BASE), KC_TAB, KC_ENT
     ),
     
 /* Keymap 1: Symbol Layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
+ * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           | Mute |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |   !  |   @  |   {  |   }  |   |  |      |           |      |   Up |   7  |   8  |   9  |   *  |   F12  |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |   #  |   $  |   (  |   )  |   `  |------|           |------| Down |   4  |   5  |   6  |   +  |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |   &  |   1  |   2  |   3  |   \  |        |
+ * |        |      |      |      |      |      |      |           | Vol  |      | PgUp |  Up  | PgDn |      |   F12  |
+ * |--------+------+------+------+------+------|      |           | Up   |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |------|           |------|      | Left | Down | Right|      |        |
+ * |--------+------+------+------+------+------|      |           | Vol  |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |      |           | Down |      |      | MsUp |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       |      |    . |   0  |   =  |      |
+ *   | RESET|      |      |      |      |                                       |MsLeft|MsDown|MsRght|      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       |      |      |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      |      |       |      |      |      |
- *                                 |      |      |------|       |------|      |      |
- *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |------|       |------| Lclk | Rclk |
+ *                                 |      |      |      |       |[BASE]|      |      |
  *                                 `--------------------'       `--------------------'
  */
 // SYMBOLS
-[SYMB] = KEYMAP(
+[LY1] = KEYMAP(
        // left hand
-       KC_TRNS,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_TRNS,
-       KC_TRNS,KC_EXLM,KC_AT,  KC_LCBR,KC_RCBR,KC_PIPE,KC_TRNS,
-       KC_TRNS,KC_HASH,KC_DLR, KC_LPRN,KC_RPRN,KC_GRV,
-       KC_TRNS,KC_PERC,KC_CIRC,KC_LBRC,KC_RBRC,KC_TILD,KC_TRNS,
-       KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,KC_TRNS,
-                                       KC_TRNS,KC_TRNS,
+       KC_TRNS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, 
+       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+       RESET,   DEBUG,   KC_TRNS, KC_TRNS, KC_TRNS, 
+                                        KC_TRNS,KC_TRNS,
                                                KC_TRNS,
                                KC_TRNS,KC_TRNS,KC_TRNS,
        // right hand
-       KC_TRNS, KC_F6,   KC_F7,  KC_F8,   KC_F9,   KC_F10,  KC_F11,
-       KC_TRNS, KC_UP,   KC_7,   KC_8,    KC_9,    KC_ASTR, KC_F12,
-                KC_DOWN, KC_4,   KC_5,    KC_6,    KC_PLUS, KC_TRNS,
-       KC_TRNS, KC_AMPR, KC_1,   KC_2,    KC_3,    KC_BSLS, KC_TRNS,
-                         KC_TRNS,KC_DOT,  KC_0,    KC_EQL,  KC_TRNS,
+       KC_MUTE, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+       KC_VOLU, KC_TRNS, KC_PGUP, KC_UP,   KC_PGDN, KC_TRNS, KC_F12,
+                KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS,
+       KC_VOLD, KC_TRNS, KC_TRNS, KC_MS_U, KC_TRNS, KC_TRNS, KC_TRNS,
+                         KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS,
-       KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS
+       TG(LY2_NA),
+       DF(BASE), KC_BTN1, KC_BTN2
 ),
 /* Keymap 2: Media and mouse keys
  *
@@ -119,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 // MEDIA AND MOUSE
-[MDIA] = KEYMAP(
+[LY2_NA] = KEYMAP(
        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_TRNS, KC_MS_U, KC_TRNS, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS,
@@ -136,12 +140,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           KC_VOLU, KC_VOLD, KC_MUTE, KC_TRNS, KC_TRNS,
        KC_TRNS, KC_TRNS,
        KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_WBAK
+       TG(BASE), KC_TRNS, KC_WBAK
 ),
 };
 
 const uint16_t PROGMEM fn_actions[] = {
-    [1] = ACTION_LAYER_TAP_TOGGLE(SYMB)                // FN1 - Momentary Layer 1 (Symbols)
+    [1] = ACTION_LAYER_TAP_TOGGLE(LY1)                // FN1 - Momentary Layer 1 (Symbols)
 };
 
 const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
@@ -175,11 +179,14 @@ void matrix_scan_user(void) {
     ergodox_right_led_3_off();
     switch (layer) {
       // TODO: Make this relevant to the ErgoDox EZ.
-        case 1:
+        case BASE:
             ergodox_right_led_1_on();
             break;
-        case 2:
+        case LY1:
             ergodox_right_led_2_on();
+            break;
+        case LY2_NA:
+            ergodox_right_led_3_on();
             break;
         default:
             // none
